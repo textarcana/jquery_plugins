@@ -27,12 +27,19 @@
 
                  replaceClass : function(oldClass, newClass, addNewClassp) {
 
-                   return this.each(function() {
+                   return this.each(
+                     function() {
 
-                                      $(this).addClass(newClass);
-                                      $(this).removeClass(oldClass);
+                       var el = $(this);
 
-                                    });
+                       if (el.hasClass(oldClass) || addNewClassp === true) {
+
+                         el.removeClass(oldClass);
+                         el.addClass(newClass);
+
+                       }
+
+                     });
                  }
                });
  })(jQuery);
