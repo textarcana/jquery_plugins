@@ -43,3 +43,27 @@
                  }
                });
  })(jQuery);
+
+
+(function($){
+   $.fn.extend({
+
+                 toggleClass : function(oldClass, newClass, addNewClassp) {
+
+                   var addp = addNewClassp || false;
+
+                   return this.each(
+                     function() {
+
+                       var el = $(this);
+
+                       if (el.hasClass(oldClass))
+                         el.replaceClass(oldClass, newClass, addp);
+
+                       else if (el.hasClass(newClass))
+                       el.replaceClass(newClass, oldClass, addp);
+
+                     });
+                 }
+               });
+ })(jQuery);
