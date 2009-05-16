@@ -1,6 +1,9 @@
 /**
+ *
+ * @method replaceClass
+ *
  * Replace existing class foo with class bar.
- * Pass an optional true value as the final argument, and the class bar will be added if it is not already applied.
+ * Pass an optional true value as the final argument, and the class bar will be added if neither class bar nor class foo is not already applied.
  *
  * For instance:
  *
@@ -9,6 +12,13 @@
  *
  *     $(el).replaceClass('off', 'hilite', true);  // apply the class 'hilite' to el
  *                                                 // and if el has the class 'off', remove it
+ *
+ * @method toggleClass
+ *
+ * If an element has class foo, replace it with class bar, or, if an element has class bar, replace it with class foo.
+ * Pass an optional true value as the final argument, and the class bar will be added if neither class bar nor class foo is not already applied.
+ *
+ * For instance:
  *
  *     $(el).toggleClass('off', 'hilite');         // if el has the class 'off' then replace it with 'hilite'
  *                                                 // or if el has the class 'hilite' then replace it with 'off'
@@ -24,39 +34,22 @@
 
 (function($){
    $.fn.extend({
-
                  replaceClass : function(oldClass, newClass, addNewClassp) {
-
                    return this.each(
                      function() {
-
                        var el = $(this);
 
                        if (el.hasClass(oldClass) || addNewClassp === true) {
-
                          el.removeClass(oldClass);
                          el.addClass(newClass);
-
                        }
 
                      });
-                 }
-               });
- })(jQuery);
-
-
-(function($){
-   $.fn.extend({
+                 },
 
                  toggleClass : function(oldClass, newClass, addNewClassp) {
-
-                   var addp = addNewClassp || false;
-
-                   console.log('addp is ', addp);
-
                    return this.each(
                      function() {
-
                        var el = $(this);
 
                        if (el.hasClass(oldClass))
@@ -65,9 +58,8 @@
                        else if (el.hasClass(newClass))
                          el.replaceClass(newClass, oldClass);
 
-                       else
-                         el.replaceClass(oldClass, newClass, addp);
-
+                       else if (addNewClassp === true)
+                         el.addClass(newClass);
                      });
                  }
                });
