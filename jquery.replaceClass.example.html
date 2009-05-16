@@ -16,8 +16,12 @@ This LI initially has class foo.
 This LI initially has neither class foo nor class bar.
 </li>
 </ul>
-<p><button onclick="$('li').replaceClass('foo', 'bar')">replace foo with bar on elements that already have class foo</button></p>
-<p><button onclick="$('li').replaceClass('foo', 'bar', true)">as above but also append class bar to elements that have neither class foo nor bar</button>
+<hr>
+<p><button onclick="$('li').replaceClass('foo', 'bar')">replace bar with foo on elements that already have class foo</button></p>
+<p><button onclick="$('li').replaceClass('foo', 'bar', true)">the same, but also append class bar to elements that have neither class foo nor bar</button>
+<hr>
+<p><button onclick="$('li').toggleClass('foo', 'bar')">toggle elements that have class foo to class bar, and vice versa</button></p>
+<p><button onclick="$('li').toggleClass('foo', 'bar', true)">the same, but also append class bar to elements that have neither class foo nor bar</button>
 </p></body>
 </html>
 
