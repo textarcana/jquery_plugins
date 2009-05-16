@@ -4,18 +4,18 @@
  *
  * For instance:
  *
- *     $(el).replaceClass('hilite', 'off');        // replace the class 'hilite' with the class 'off'
+ *     $(el).replaceClass('off', 'hilite');        // replace the class 'off' with the class 'hilite'
  *                                                 // does nothing if el does not have the class 'hilite'
  *
- *     $(el).replaceClass('hilite', 'off', true);  // apply the class 'off' to el
- *                                                 // and if el has the class 'hilite', remove it
+ *     $(el).replaceClass('off', 'hilite', true);  // apply the class 'hilite' to el
+ *                                                 // and if el has the class 'off', remove it
  *
- *     $(el).toggleClass('hilite', 'off');         // if el has the class 'hilite' then replace it with 'off'
- *                                                 // or if el has the class 'off' then replace it with 'hilite'
- *                                                 // does nothing if el has neither the class 'hilite' nor the class 'off'
+ *     $(el).toggleClass('off', 'hilite');         // if el has the class 'off' then replace it with 'hilite'
+ *                                                 // or if el has the class 'hilite' then replace it with 'off'
+ *                                                 // does nothing if el has neither the class 'off' nor the class 'hilite'
  *
- *     $(el).toggleClass('hilite', 'off', true);   // as the previous example, but if el does not have the class 'hilite' nor 'off'
- *                                                 // then apply the class 'off'
+ *     $(el).toggleClass('off', 'hilite', true);   // as the previous example, but if el does not have the class 'off' nor 'hilite'
+ *                                                 // then apply the class 'hilite'
  *
  *
  * @see http://snipplr.com/view/3338/toggle-classname/
