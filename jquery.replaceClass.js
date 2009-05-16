@@ -52,16 +52,21 @@
 
                    var addp = addNewClassp || false;
 
+                   console.log('addp is ', addp);
+
                    return this.each(
                      function() {
 
                        var el = $(this);
 
                        if (el.hasClass(oldClass))
-                         el.replaceClass(oldClass, newClass, addp);
+                         el.replaceClass(oldClass, newClass);
 
                        else if (el.hasClass(newClass))
-                       el.replaceClass(newClass, oldClass, addp);
+                         el.replaceClass(newClass, oldClass);
+
+                       else
+                         el.replaceClass(oldClass, newClass, addp);
 
                      });
                  }
