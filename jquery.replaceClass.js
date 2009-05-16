@@ -25,11 +25,12 @@
 (function($){
    $.fn.extend({
 
-                 toggleClass : function() {
+                 replaceClass : function(oldClass, newClass, addNewClassp) {
 
                    return this.each(function() {
 
-                                      
+                                      $(this).addClass(newClass);
+                                      $(this).removeClass(oldClass);
 
                                     });
                  }
