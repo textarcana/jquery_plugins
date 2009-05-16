@@ -19,5 +19,19 @@
  *
  *
  * @see http://snipplr.com/view/3338/toggle-classname/
- * 
+ *
  */
+
+(function($){
+   $.fn.extend({
+
+                 toggleClass : function() {
+
+                   return this.each(function() {
+
+                                      
+
+                                    });
+                 }
+               });
+ })(jQuery);
