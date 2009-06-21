@@ -41,23 +41,23 @@ end
 module SeleniumCommandShortcuts
 
   # == Stringified JavaScript reference to the window object of the Application Under Test.
-  $window = 'this.browserbot.getCurrentWindow().'
+  def window 
+    'this.browserbot.getCurrentWindow().'
+  end
 
   # == Prepend some stringified JavaScript with a reference to the window object of the Application Under Test.
   def js_get(js_string)
-    return @selenium.js_eval($window + js_string)
+    return @selenium.js_eval(window + js_string)
   end
 
 end
 
 module SeleniumHelper
 
-  import SeleniumCommandShortcuts
-  import TodoAssertion
+  include SeleniumCommandShortcuts
+  include TodoAssertion
 
   attr_reader :selenium
-
-  $domain = ARGV[0]
 
   # == Start a new browser instance with no cookies or cached files.
   def setup
@@ -65,7 +65,8 @@ module SeleniumHelper
     if $selenium
       @selenium = $selenium
     else
-      @selenium = Selenium::Client::Driver.new "localhost", 4444, "*firefox", $domain, 10000
+      # server_host, server_port, browser_string, browser_url, timeout_in_seconds=300
+      @selenium = Selenium::Client::Driver.new "localhost", 4444, "*chrome", "http://localhost", 10000
       @selenium.start_new_browser_session
     end
     @selenium.set_context("selenium_helper")
@@ -80,43 +81,96 @@ module SeleniumHelper
 end
 
 
-class replaceClassJqueryTest < Test::Unit::TestCase
+class ReplaceClassJqueryTest < Test::Unit::TestCase
 
   include SeleniumHelper
 
-  def test_click_each_button
+  def test_example_html
 
-    replace_bar_with_foo
+    load_aut
+
+    assert_equal @selenium.title, "replaceClass jQuery plugin example", "page title"
+
+    assert @selenium.get_expression(js_get(%{$().jquery}).match(/(\d+\.?){3}/)), "jQuery version string format"
+
+
+    replace_class
+
+    replace_or_assign_class
+
+    toggle_class
+
+    toggle_or_assign_class
 
   end
 
   private
 
-# replace bar with foo on elements that already have class foo
+  def load_aut
+    @selenium.open "/~noah/jquery_plugins/jquery.replaceClass.example.html"
+  end
 
-#    $('li').replaceClass('foo', 'bar') 
+  def click_button button_index, &block
+
+    load_aut
+
+    @selenium.get_expression(js_get(%{$('button')[#{button_index}].onclick()}))
+
+    yield
+
+  end
+
+  # replace bar with foo on elements that already have class foo
+
+  #    $('li').replaceClass('foo', 'bar') 
 
   def replace_class
+
+    click_button 1 do
+
+      assert_equal 0, @selenium.get_expression(js_get %{$('.foo').length}).to_i, "no elements with classname foo"
+
+      assert_equal 2, @selenium.get_expression(js_get %{$('.bar').length}).to_i, "some elements with classname bar"
+
+    end
+
   end
 
-# the same, but also append class bar to elements that have neither
-# class foo nor bar
+  # the same, but also append class bar to elements that have neither
+  # class foo nor bar
 
-#    $('li').replaceClass('foo', 'bar', true) 
+  #    $('li').replaceClass('foo', 'bar', true) 
 
   def replace_or_assign_class
+
+    click_button 2 do
+
+      assert_equal 0, @selenium.get_expression(js_get %{$('.foo').length}).to_i, "no elements with classname foo"
+
+      assert_equal 3, @selenium.get_expression(js_get %{$('.bar').length}).to_i, "some elements with classname bar"      
+
+    end
+
   end
 
-# toggle elements that have class foo to class bar, and vice versa
+  # toggle elements that have class foo to class bar, and vice versa
 
-#    $('li').toggleClass('foo', 'bar') 
+  #    $('li').toggleClass('foo', 'bar') 
 
   def toggle_class
+
+    click_button 3 do
+
+      assert_equal 0, @selenium.get_expression(js_get %{$('#hasFoo').class}), "#hasFoo has class bar instead"
+
+      
+    end
+
   end
 
-# the same, but also append class bar to elements that have neither class foo nor bar
+  # the same, but also append class bar to elements that have neither class foo nor bar
 
-#    $('li').toggleClass('foo', 'bar', true) 
+  #    $('li').toggleClass('foo', 'bar', true) 
 
   def toggle_or_assign_class
   end
